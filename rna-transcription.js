@@ -13,16 +13,14 @@ var convertDnaToRna = function(dna, i, rna) {
 
 var getRnaForDna = function (dna) {
 	
-	switch(dna) {
-		case 'G':
-			return 'C';
-		case 'C':
-			return 'G';
-		case 'A':
-			return 'U';
-		case 'T':
-			return 'A';
-	}
+	var dnaToRnaMap = {
+		'G' : 'C',
+		'C' : 'G',
+		'A' : 'U',
+		'T' : 'A'	
+	};
+	
+	return dnaToRnaMap[dna];
 }
 
 DnaTranscriber.prototype.toDna = function(input) {
