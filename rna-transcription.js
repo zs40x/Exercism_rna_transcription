@@ -23,8 +23,27 @@ var getRnaForDna = function (dna) {
 	return dnaToRnaMap[dna];
 }
 
-DnaTranscriber.prototype.toDna = function(input) {
+DnaTranscriber.prototype.toDna = function(rna) {
 	
+	return convertRnaToDna(rna, 0, "");
 };
+
+var convertRnaToDna = function(rna, i, dna) {
+	
+	return (i == rna.length) 
+		? dna : convertRnaToDna(rna, i+1, dna + getDnaForRna(rna[i]));
+}
+
+var getDnaForRna = function (rna) {
+	
+	var rnaToDnaMap = {
+		'C' : 'G',
+		'G' : 'C',
+		'U' : 'A',
+		'A' : 'T'	
+	};
+	
+	return rnaToDnaMap[rna];
+}
 
 module.exports = DnaTranscriber;
