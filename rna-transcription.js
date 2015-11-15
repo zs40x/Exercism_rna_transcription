@@ -1,29 +1,13 @@
 var DnaTranscriber = function() {};
 
-DnaTranscriber.prototype.toRna = function(dna) {	
+DnaTranscriber.prototype.toRna = function(fromDna) {	
 	
-	return transcribe(
-				dna, 
-				{
-					'G' : 'C', 
-					'C' : 'G', 
-					'A' : 'U', 
-					'T' : 'A'	
-				}
-			);
+	return transcribe(fromDna, toRna);
 };
 
-DnaTranscriber.prototype.toDna = function(rna) {
+DnaTranscriber.prototype.toDna = function(fromRna) {
 
-	return transcribe(
-				rna, 
-				{
-					'C' : 'G',
-					'G' : 'C',
-					'U' : 'A',
-					'A' : 'T'	
-				}
-			);
+	return transcribe(fromRna, toDna);
 };
 
 var transcribe = function(sequence, mapping) {
@@ -32,7 +16,24 @@ var transcribe = function(sequence, mapping) {
 		return mapping[char];
 	}
 	
-	return sequence.split("").map(transcribeChar).join("");
+	return sequence
+			.split("")
+			.map(transcribeChar)
+			.join("");
 }
+
+var toRna = {
+	'G' : 'C', 
+	'C' : 'G', 
+	'A' : 'U', 
+	'T' : 'A'	
+};
+	
+var toDna = {
+	'C' : 'G',
+	'G' : 'C',
+	'U' : 'A',
+	'A' : 'T'	
+};
 
 module.exports = DnaTranscriber;
