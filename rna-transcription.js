@@ -1,49 +1,38 @@
 var DnaTranscriber = function() {};
 
-DnaTranscriber.prototype.toRna = function(dna) {
+DnaTranscriber.prototype.toRna = function(dna) {	
 	
-	return convertDnaToRna(dna, 0, "");
+	return transcribe(
+				dna, 
+				{
+					'G' : 'C', 
+					'C' : 'G', 
+					'A' : 'U', 
+					'T' : 'A'	
+				}
+			);
 };
-
-var convertDnaToRna = function(dna, i, rna) {
-	
-	return (i == dna.length) 
-		? rna : convertDnaToRna(dna, i+1, rna + getRnaForDna(dna[i]));
-}
-
-var getRnaForDna = function (dna) {
-	
-	var dnaToRnaMap = {
-		'G' : 'C',
-		'C' : 'G',
-		'A' : 'U',
-		'T' : 'A'	
-	};
-	
-	return dnaToRnaMap[dna];
-}
 
 DnaTranscriber.prototype.toDna = function(rna) {
-	
-	return convertRnaToDna(rna, 0, "");
+
+	return transcribe(
+				rna, 
+				{
+					'C' : 'G',
+					'G' : 'C',
+					'U' : 'A',
+					'A' : 'T'	
+				}
+			);
 };
 
-var convertRnaToDna = function(rna, i, dna) {
+var transcribe = function(sequence, mapping) {
 	
-	return (i == rna.length) 
-		? dna : convertRnaToDna(rna, i+1, dna + getDnaForRna(rna[i]));
-}
-
-var getDnaForRna = function (rna) {
+	function transcribeChar(char) {
+		return mapping[char];
+	}
 	
-	var rnaToDnaMap = {
-		'C' : 'G',
-		'G' : 'C',
-		'U' : 'A',
-		'A' : 'T'	
-	};
-	
-	return rnaToDnaMap[rna];
+	return sequence.split("").map(transcribeChar).join("");
 }
 
 module.exports = DnaTranscriber;
