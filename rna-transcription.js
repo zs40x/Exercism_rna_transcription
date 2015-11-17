@@ -1,39 +1,37 @@
+'use strict'
+
 var DnaTranscriber = function() {};
 
-DnaTranscriber.prototype.toRna = function(fromDna) {	
-	
-	return transcribe(fromDna, toRna);
-};
-
-DnaTranscriber.prototype.toDna = function(fromRna) {
-
-	return transcribe(fromRna, toDna);
-};
-
-var transcribe = function(sequence, mapping) {
-	
-	function transcribeChar(char) {
-		return mapping[char];
-	}
-	
-	return sequence
-			.split("")
-			.map(transcribeChar)
-			.join("");
-}
-
-var toRna = {
+const TO_RNA = {
 	'G' : 'C', 
 	'C' : 'G', 
 	'A' : 'U', 
 	'T' : 'A'	
 };
 	
-var toDna = {
+const TO_DNA = {
 	'C' : 'G',
 	'G' : 'C',
 	'U' : 'A',
 	'A' : 'T'	
+};
+
+let transcribe = (sequence, directionMapping) => {
+
+	return sequence
+			.split("")
+			.map( (nucleotide) => directionMapping[nucleotide] )
+			.join("");
+ }
+
+DnaTranscriber.prototype.toRna = function(fromDna) {	
+	
+	return transcribe(fromDna, TO_RNA);
+};
+
+DnaTranscriber.prototype.toDna = function(fromRna) {
+
+	return transcribe(fromRna, TO_DNA);
 };
 
 module.exports = DnaTranscriber;
